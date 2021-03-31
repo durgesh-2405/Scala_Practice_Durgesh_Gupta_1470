@@ -1,28 +1,29 @@
 //User Management System, Author- Durgesh Gupta
-package org.knoldus.UserRepositoryTest
 
-import org.knoldus.UserDataRepository.UserDataRepository
-import org.knoldus.UserModel.{UserData, UserType}
+package org.knoldus.UserRepositoryTest
+import org.knoldus.UserModels.{User, UserType}
+import org.knoldus.UserRepository.UserRepository
 import org.scalatest.flatspec.AnyFlatSpec
 
-class UserDataRepositoryTest extends AnyFlatSpec{
+class UserRepositoryTest extends AnyFlatSpec {
 
-  val userDataRepositoryTest = new UserDataRepository
-  val userAdmin: UserData = UserData(1, "Durgesh", UserType.ADMIN)
-  val userCustomer: UserData = UserData(2, "Saurabh", UserType.CUSTOMER)
+
+  val userRepository = new UserRepository
+  val userAdmin: User = User(1, "Durgesh", UserType.ADMIN)
+  val userCustomer: User = User(2, "Saurabh", UserType.CUSTOMER)
   val input1 = 4
 
   //Test case for createUser method
-  "Validating userCreate" should "be valid when adding admin" in {
-    assert(userDataRepositoryTest.userCreate(userAdmin))
-    userDataRepositoryTest.deleteUser(1)
+  "Validating createUser" should "be valid when adding admin" in {
+    assert(userRepository.createUser(userAdmin))
+    userRepository.deleteUser(1)
   }
-  "Validating userCreate" should "be valid when adding customer" in {
-    assert(userDataRepositoryTest.userCreate(userCustomer))
-    userDataRepositoryTest.deleteUser(2)
+  "Validating createUser" should "be valid when adding customer" in {
+    assert(userRepository.createUser(userCustomer))
+    userRepository.deleteUser(2)
   }
-  "userCreate" should "be invalid when adding same admin again" in {
-    val actualResult = userDataRepositoryTest.createUser(userAdmin)
+  "Validating createUser" should "be invalid when adding same admin again" in {
+    val actualResult = userRepository.createUser(userAdmin)
     val expectedResult = false
     assert(actualResult != expectedResult)
     userRepository.deleteUser(1)
@@ -111,7 +112,7 @@ class UserDataRepositoryTest extends AnyFlatSpec{
   "Validating getUserNameById" should "be valid" in {
     userRepository.createUser(userAdmin)
     val actualResult = userRepository.getUserNameById(1)
-    val expectedResult = "Tanishka"
+    val expectedResult = "Durgesh"
     assert(actualResult === expectedResult)
     userRepository.deleteUser(1)
   }
@@ -125,7 +126,7 @@ class UserDataRepositoryTest extends AnyFlatSpec{
 
   /*-------------------------------------------------------------------------------------*/
 
-  /*DATABASE CONNECTION API FILE METHOD TESTING*/
+    /*DATABASE CONNECTION API FILE METHOD TESTING*/
 
   //Test case for insertUserDatabase method
   "Validating insertUserDatabase" should "be valid when adding admin" in {
@@ -213,7 +214,4 @@ class UserDataRepositoryTest extends AnyFlatSpec{
     val expectedResult =  "Name not returned by Id"
     assert(actualResult != expectedResult)
   }
-}
-
-
 }
